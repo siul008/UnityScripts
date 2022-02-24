@@ -1,0 +1,12 @@
+public void Shoot(Vector3 shootPosition, GameObject targetGO, GameObject projectilePrefab)
+    {
+        Vector3 direction;
+        float angle;
+        
+        direction = (targetGO.transform.position - shootPosition).normalized;
+        angle = Mathf.Atan2(targetGO.transform.position.y - shootPosition.y, targetGO.transform.position.x - shootPosition.x) * Mathf.Rad2Deg;
+        
+        GameObject projectile = Instantiate(projectilePrefab, shootPosition, Quaternion.Euler(0, 0, angle));
+        Rigidbody2D rb = projectile.GetComponent<Rigidbody2D>();
+        rb.AddForce(direction * //TODO , ForceMode2D.Impulse);
+    }
