@@ -1,0 +1,13 @@
+public void GainXP(float xpGain)
+    {
+        if ((currentXp + xpGain) > maxXp)
+        {
+            LevelUp();
+            currentXp = (currentXp + xpGain) - maxXp;
+            maxXp *= TODO;
+        }
+        else
+        {
+            currentXp += xpGain;
+        }
+    }
