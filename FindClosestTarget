@@ -1,0 +1,40 @@
+public GameObject FindClosestTarget(Vector3 startPosition, LayerMask targetLayer, float detectionRadius)
+    {
+
+        List<GameObject> targets = null;
+        Vector3 targetPosition;
+        float positionDiff;
+        float closestPosition = Mathf.Infinity; //closestPosition est égale à l'infini (pour la première comparaison)
+        int closestEnemyIndex = 0;
+
+
+        /* On detecte tous les colliders à partir de *startPosition selon la *detectionRadius de tous les objets du *targetLayer */
+        Collider2D[] targetColliders = Physics2D.OverlapCircleAll(startPosition, detectionRadius, targetLayer); 
+        
+        /* On récupère tous les objects grâce à targetColliders et on les stock dans la Liste *targets */
+        for (int i = 0; i < targetColliders.Length; i++)
+        {
+            targets.Add(targetColliders[i].gameObject);
+        }
+        
+        if(targets.Count != 0) //Si la Liste n'est pas vide
+        {
+            for (int i = 0; i < targets.Count; i++)
+            {
+                targetPosition = targets[i].transform.position; //targetPosition* = la position de target analysé
+                positionDiff = (targetPosition - startPosition).sqrMagnitude; //On fait la différence entre *startPosition et la position de target et on le stock dans *positionDiff
+
+                if(positionDiff <= closestPosition) //Si positionDiff* est plus petite que l'ancienne closestPosition*
+                {
+                    closestPosition = positionDiff; //positionDiff* deviens la nouvelle closestPosition*
+                    closestEnemyIndex = i; //On note l'index de l'enemi qui est le proche actuellement
+                }
+            }
+            return targets[closestEnemyIndex]; //A la fin de la boucle on retourne l'objet le plus proche grâce à closestEnemyIndex*
+        }
+        else //Si la liste est vide on retourne null
+        {
+            return null;
+        }
+    }
+}
